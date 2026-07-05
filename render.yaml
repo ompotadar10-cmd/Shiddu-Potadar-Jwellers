@@ -2,7 +2,7 @@ services:
   - type: web
     name: siddu-potadar-jewelry
     env: node
-    buildCommand: "cd client && npm install && npm run build && cd ../server && npm install"
+    buildCommand: "cd client && npm install && npm run build && cd ../server && npm install && rm -rf ./dist && cp -r ../client/dist ./dist"
     startCommand: "cd server && npm start"
     plan: free
     envVars:
@@ -10,5 +10,7 @@ services:
         value: production
       - key: PORT
         value: 10000
+      - key: NODE_VERSION
+        value: 20.15.1
       - key: JWT_SECRET
         generateValue: true
