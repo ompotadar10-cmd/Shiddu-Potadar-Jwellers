@@ -9,7 +9,7 @@ const db = require('../db/database');
 const router = express.Router();
 
 // ── Multer Configuration ────────────────────────────────────────
-const uploadsDir = path.join(__dirname, '../../uploads');
+const uploadsDir = process.env.UPLOADS_PATH || path.join(__dirname, '../../uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }

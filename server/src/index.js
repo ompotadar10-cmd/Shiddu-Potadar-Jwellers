@@ -20,14 +20,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, '../uploads');
+const uploadsDir = process.env.UPLOADS_PATH || path.join(__dirname, '../uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
 // Ensure data directory exists
 const dataDir = path.join(__dirname, '../data');
-if (!fs.existsSync(dataDir)) {
+if (!fs.existsSync(dataDir) && !process.env.DB_PATH) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
@@ -44,7 +44,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // ── Static Files ───────────────────────────────────────────────
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/uploads', express.static(uploadsDir));
 
 // ── API Routes ─────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);

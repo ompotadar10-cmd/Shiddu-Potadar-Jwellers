@@ -2,13 +2,14 @@ const path = require('path');
 const fs = require('fs');
 const Database = require('better-sqlite3');
 
-// Ensure data directory exists
-const dataDir = path.join(__dirname, '../../data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+const dbPath = process.env.DB_PATH || path.join(__dirname, '../../data/shop.db');
+
+// Ensure database directory exists
+const dbDir = path.dirname(dbPath);
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
 }
 
-const dbPath = path.join(__dirname, '../../data/shop.db');
 const db = new Database(dbPath);
 
 // Enable WAL mode for performance
