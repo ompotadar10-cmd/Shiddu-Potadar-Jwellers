@@ -2,7 +2,7 @@ services:
   - type: web
     name: siddu-potadar-jewelry
     env: node
-    buildCommand: "cd client && npm install && npm run build && cd ../server && npm install && rm -rf ./dist && cp -r ../client/dist ./dist"
+    buildCommand: "cd client && npm install --include=dev && npm run build && cd ../server && npm install && rm -rf ./dist && cp -r ../client/dist ./dist"
     startCommand: "cd server && npm start"
     plan: free
     envVars:
