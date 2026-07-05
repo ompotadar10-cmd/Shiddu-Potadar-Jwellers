@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: siddu-potadar-jewelry
+    env: node
+    buildCommand: "cd client && npm install && npm run build && cd ../server && npm install"
+    startCommand: "cd server && npm start"
+    plan: free
+    disk:
+      name: shop-data
+      mountPath: /opt/shop-data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_PATH
+        value: /opt/shop-data/shop.db
+      - key: UPLOADS_PATH
+        value: /opt/shop-data/uploads
