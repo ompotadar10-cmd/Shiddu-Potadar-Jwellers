@@ -3,7 +3,7 @@ services:
     name: siddu-potadar-jewelry
     env: node
     buildCommand: "cd client && npm install --include=dev && npm run build && cd ../server && npm install && rm -rf ./dist && cp -r ../client/dist ./dist"
-    startCommand: "cd server && npm start"
+    startCommand: "cd server && node src/db/seed.js && npm start"
     plan: free
     envVars:
       - key: NODE_ENV
