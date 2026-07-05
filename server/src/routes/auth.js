@@ -24,6 +24,14 @@ router.post(
 
       const { username, password } = req.body;
 
+      // Self-healing check: if users table is empty, seed default admin on the fly
+      const countResult = db.prepare('SELECT COUNT(*) as count FROM users').get();
+      if (countResult.count === 0) {
+        const passwordHash = bcrypt.hashSync('Admin@123', 10);
+        db.prepare('INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)').run('admin', passwordHash, 'admin');
+        console.log('⚡ Dynamic self-healing: default admin user created.');
+      }
+
       const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username);
       if (!user) {
         return res.status(401).json({ error: 'Invalid username or password.' });
